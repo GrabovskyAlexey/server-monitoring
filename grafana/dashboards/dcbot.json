@@ -621,7 +621,7 @@
     },
     {
       "id": 15,
-      "type": "timeseries",
+      "type": "bargauge",
       "title": "Подписчики по серверам (топ 10)",
       "datasource": {
         "type": "prometheus",
@@ -641,28 +641,35 @@
           },
           "expr": "topk(10, bot_server_subscribers{application=\"dungeoncrusherbot\"})",
           "legendFormat": "{{server}}",
-          "refId": "A"
+          "refId": "A",
+          "instant": true,
+          "range": false
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "short"
+          "unit": "short",
+          "color": {
+            "mode": "continuous-GrYlRd"
+          }
         },
         "overrides": []
       },
       "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi"
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
         }
       }
     },
     {
       "id": 16,
-      "type": "timeseries",
+      "type": "bargauge",
       "title": "Основные серверы игроков (топ 10)",
       "datasource": {
         "type": "prometheus",
@@ -682,28 +689,35 @@
           },
           "expr": "topk(10, bot_server_main_players{application=\"dungeoncrusherbot\"})",
           "legendFormat": "{{server}}",
-          "refId": "A"
+          "refId": "A",
+          "instant": true,
+          "range": false
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "short"
+          "unit": "short",
+          "color": {
+            "mode": "continuous-GrYlRd"
+          }
         },
         "overrides": []
       },
       "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi"
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
         }
       }
     },
     {
       "id": 17,
-      "type": "timeseries",
+      "type": "bargauge",
       "title": "Подписки на уведомления (SIEGE enabled = напоминание за 5 минут)",
       "datasource": {
         "type": "prometheus",
@@ -723,28 +737,35 @@
           },
           "expr": "sum by (type, enabled) (bot_notification_subscriptions{application=\"dungeoncrusherbot\"})",
           "legendFormat": "{{type}} enabled={{enabled}}",
-          "refId": "A"
+          "refId": "A",
+          "instant": true,
+          "range": false
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "short"
+          "unit": "short",
+          "color": {
+            "mode": "continuous-GrYlRd"
+          }
         },
         "overrides": []
       },
       "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi"
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
         }
       }
     },
     {
       "id": 18,
-      "type": "timeseries",
+      "type": "bargauge",
       "title": "Активные заявки на обмен",
       "datasource": {
         "type": "prometheus",
@@ -764,22 +785,29 @@
           },
           "expr": "sum by (type) (bot_exchange_requests_active{application=\"dungeoncrusherbot\"})",
           "legendFormat": "{{type}}",
-          "refId": "A"
+          "refId": "A",
+          "instant": true,
+          "range": false
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "short"
+          "unit": "short",
+          "color": {
+            "mode": "continuous-GrYlRd"
+          }
         },
         "overrides": []
       },
       "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi"
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
         }
       }
     },
@@ -844,7 +872,7 @@
     },
     {
       "id": 20,
-      "type": "timeseries",
+      "type": "bargauge",
       "title": "Долги: записей",
       "datasource": {
         "type": "prometheus",
@@ -864,28 +892,35 @@
           },
           "expr": "sum by (direction, resource) (bot_debts{application=\"dungeoncrusherbot\"})",
           "legendFormat": "{{direction}} {{resource}}",
-          "refId": "A"
+          "refId": "A",
+          "instant": true,
+          "range": false
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "short"
+          "unit": "short",
+          "color": {
+            "mode": "continuous-GrYlRd"
+          }
         },
         "overrides": []
       },
       "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi"
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
         }
       }
     },
     {
       "id": 21,
-      "type": "timeseries",
+      "type": "bargauge",
       "title": "Долги: сумма",
       "datasource": {
         "type": "prometheus",
@@ -905,28 +940,35 @@
           },
           "expr": "sum by (direction, resource) (bot_debts_amount{application=\"dungeoncrusherbot\"})",
           "legendFormat": "{{direction}} {{resource}}",
-          "refId": "A"
+          "refId": "A",
+          "instant": true,
+          "range": false
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "short"
+          "unit": "short",
+          "color": {
+            "mode": "continuous-GrYlRd"
+          }
         },
         "overrides": []
       },
       "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi"
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
         }
       }
     },
     {
       "id": 22,
-      "type": "timeseries",
+      "type": "bargauge",
       "title": "Пользователи по языку",
       "datasource": {
         "type": "prometheus",
@@ -946,22 +988,29 @@
           },
           "expr": "sort_desc(bot_users_language{application=\"dungeoncrusherbot\"})",
           "legendFormat": "{{language}}",
-          "refId": "A"
+          "refId": "A",
+          "instant": true,
+          "range": false
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "short"
+          "unit": "short",
+          "color": {
+            "mode": "continuous-GrYlRd"
+          }
         },
         "overrides": []
       },
       "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi"
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
         }
       }
     },
