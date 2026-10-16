@@ -182,3 +182,25 @@ groups:
         labels: {severity: warning}
         annotations:
           summary: "poibot: запросы ждут свободное подключение к БД"
+
+  - name: bots
+    rules:
+      - alert: BotUpdateErrors
+        expr: sum by (application) (increase(bot_update_seconds_count{outcome="error"}[10m])) > 3
+        labels: {severity: warning}
+        annotations:
+          summary: "{{ $labels.application }}: рост ошибок обработки апдейтов"
+          description: "{{ $value | printf \"%.0f\" }} ошибок за 10 минут, подробности в логе бота."
+
+      - alert: BotJobFailed
+        expr: sum by (application, job) (increase(bot_job_seconds_count{outcome="error"}[10m])) > 0
+        labels: {severity: warning}
+        annotations:
+          summary: "{{ $labels.application }}: задача {{ $labels.job }} завершилась ошибкой"
+
+      - alert: BotResponseSlow
+        expr: histogram_quantile(0.95, sum by (le, application) (rate(bot_update_seconds_bucket[10m]))) > 3
+        for: 10m
+        labels: {severity: warning}
+        annotations:
+          summary: "{{ $labels.application }}: бот отвечает медленно (p95 больше 3 секунд)"
