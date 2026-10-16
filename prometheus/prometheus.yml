@@ -52,6 +52,12 @@ scrape_configs:
     static_configs:
       - targets: ["127.0.0.1:8001"]
 
+  # pikabu-download-bot (контейнер pikabu-bot, /opt/pikabu-bot): порт SERVER_PORT=8087, метрики bot.* свои (без тега application)
+  - job_name: pikabu
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ["127.0.0.1:8087"]
+
   # Новое приложение с Micrometer подключается так же (порт смотрите в его .env):
   # - job_name: <имя>
   #   metrics_path: /actuator/prometheus

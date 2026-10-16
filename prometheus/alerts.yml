@@ -67,6 +67,13 @@ groups:
         annotations:
           summary: "Контейнер dailycheckerbot не запущен"
 
+      - alert: ContainerGone
+        expr: absent(container_last_seen{name="pikabu-bot"})
+        for: 2m
+        labels: {severity: critical, container: pikabu-bot}
+        annotations:
+          summary: "Контейнер pikabu-bot не запущен"
+
       - alert: ContainerRestarting
         expr: changes(container_start_time_seconds{name=~".+"}[15m]) > 2
         labels: {severity: warning}
@@ -204,3 +211,24 @@ groups:
         labels: {severity: warning}
         annotations:
           summary: "{{ $labels.application }}: бот отвечает медленно (p95 больше 3 секунд)"
+
+  - name: pikabu
+    rules:
+      - alert: PikabuDownloadsFailing
+        expr: |
+          sum(increase(bot_downloads_failed_total{job="pikabu"}[30m])) >= 5
+          and
+          sum(increase(bot_downloads_failed_total{job="pikabu"}[30m]))
+            > sum(increase(bot_downloads_successful_total{job="pikabu"}[30m]))
+        labels: {severity: warning}
+        annotations:
+          summary: "Pikabu: загрузки чаще падают, чем проходят"
+          description: "{{ $value | printf \"%.0f\" }} неудачных загрузок за 30 минут."
+
+      - alert: PikabuQueueStuck
+        expr: bot_queue_size{job="pikabu"} > 10
+        for: 15m
+        labels: {severity: warning}
+        annotations:
+          summary: "Pikabu: очередь загрузок не разбирается"
+          description: "В очереди {{ $value }} задач уже 15 минут."
