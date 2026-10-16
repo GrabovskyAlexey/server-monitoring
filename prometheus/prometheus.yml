@@ -34,8 +34,14 @@ scrape_configs:
     static_configs:
       - targets: ["127.0.0.1:8019"]
 
+  # poi-bot: профиль prod, порт из USE_PORT в ~/poibot/.env (сейчас 8099)
+  - job_name: poibot
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ["127.0.0.1:8099"]
+
   # Новое приложение с Micrometer подключается так же (порт смотрите в его .env):
-  # - job_name: poibot
+  # - job_name: <имя>
   #   metrics_path: /actuator/prometheus
   #   static_configs:
   #     - targets: ["127.0.0.1:<порт>"]

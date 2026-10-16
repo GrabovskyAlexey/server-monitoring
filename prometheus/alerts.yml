@@ -126,3 +126,45 @@ groups:
         labels: {severity: warning}
         annotations:
           summary: "Бот: запросы ждут свободное подключение к БД"
+
+  - name: poibot
+    rules:
+      - alert: PoiBotErrors
+        expr: |
+          sum(increase(poi_update_seconds_count{outcome="error"}[10m])) > 3
+        labels: {severity: warning}
+        annotations:
+          summary: "poibot: рост ошибок обработки апдейтов"
+          description: "{{ $value | printf \"%.0f\" }} ошибок за 10 минут, подробности в ~/poibot/logs/bot.log."
+
+      - alert: PoiBotFlowErrors
+        expr: |
+          sum by (flow) (increase(poi_flow_seconds_count{outcome="error"}[10m])) > 3
+        labels: {severity: warning}
+        annotations:
+          summary: "poibot: ошибки в сценарии {{ $labels.flow }}"
+          description: "{{ $value | printf \"%.0f\" }} ошибок за 10 минут."
+
+      - alert: PoiBotSlow
+        expr: |
+          histogram_quantile(0.95, sum by (le) (rate(poi_update_seconds_bucket[10m]))) > 3
+        for: 10m
+        labels: {severity: warning}
+        annotations:
+          summary: "poibot отвечает медленно (p95 больше 3 секунд)"
+
+      - alert: PoiBotHeapHigh
+        expr: |
+          sum(jvm_memory_used_bytes{application="poibot", area="heap"})
+            / sum(jvm_memory_max_bytes{application="poibot", area="heap"} > 0) > 0.9
+        for: 10m
+        labels: {severity: warning}
+        annotations:
+          summary: "poibot: куча JVM заполнена больше чем на 90%"
+
+      - alert: PoiBotDbPoolExhausted
+        expr: hikaricp_connections_pending{application="poibot"} > 0
+        for: 5m
+        labels: {severity: warning}
+        annotations:
+          summary: "poibot: запросы ждут свободное подключение к БД"
