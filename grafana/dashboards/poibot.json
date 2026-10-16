@@ -34,7 +34,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "poi_users_total",
+          "expr": "poi_users",
           "legendFormat": "",
           "refId": "A"
         }
