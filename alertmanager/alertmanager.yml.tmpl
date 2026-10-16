@@ -1,0 +1,20 @@
+# Шаблон конфигурации: scripts/render-alertmanager.sh подставляет значения из .env
+# и создаёт alertmanager.yml (в git не попадает, содержит токен бота).
+route:
+  receiver: telegram
+  group_by: [alertname]
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 6h
+
+receivers:
+  - name: telegram
+    telegram_configs:
+      - bot_token: "__TELEGRAM_BOT_TOKEN__"
+        chat_id: __TELEGRAM_CHAT_ID__
+        send_resolved: true
+        parse_mode: HTML
+        message: |-
+          {{ range .Alerts }}{{ if eq .Status "firing" }}🔥{{ else }}✅{{ end }} <b>{{ .Annotations.summary }}</b>
+          {{ if .Annotations.description }}{{ .Annotations.description }}
+          {{ end }}{{ end }}

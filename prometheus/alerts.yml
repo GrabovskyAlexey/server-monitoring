@@ -1,0 +1,128 @@
+groups:
+  - name: availability
+    rules:
+      - alert: TargetDown
+        expr: up == 0
+        for: 3m
+        labels: {severity: critical}
+        annotations:
+          summary: "Цель {{ $labels.job }} не отдаёт метрики"
+          description: "{{ $labels.instance }} недоступен 3 минуты (для drinkmebot это значит, что бот не запущен или завис)."
+
+      # Критичные контейнеры пропали из cAdvisor (остановлены или удалены). dcbot и dailycheckerbot
+      # запускаются вручную (restart=no), поэтому не входят. Новый контейнер добавляется копией правила.
+      - alert: ContainerGone
+        expr: absent(container_last_seen{name="drinkmebot"})
+        for: 2m
+        labels: {severity: critical, container: drinkmebot}
+        annotations:
+          summary: "Контейнер drinkmebot не запущен"
+
+      - alert: ContainerGone
+        expr: absent(container_last_seen{name="poibot"})
+        for: 2m
+        labels: {severity: critical, container: poibot}
+        annotations:
+          summary: "Контейнер poibot не запущен"
+
+      - alert: ContainerGone
+        expr: absent(container_last_seen{name="royalguardians-backend"})
+        for: 2m
+        labels: {severity: critical, container: royalguardians-backend}
+        annotations:
+          summary: "Контейнер royalguardians-backend не запущен"
+
+      - alert: ContainerGone
+        expr: absent(container_last_seen{name="mtproto-proxy"})
+        for: 2m
+        labels: {severity: critical, container: mtproto-proxy}
+        annotations:
+          summary: "Контейнер mtproto-proxy не запущен"
+
+      - alert: ContainerGone
+        expr: absent(container_last_seen{name="pg17"})
+        for: 2m
+        labels: {severity: critical, container: pg17}
+        annotations:
+          summary: "Контейнер pg17 не запущен"
+
+      - alert: ContainerGone
+        expr: absent(container_last_seen{name="royal-redis"})
+        for: 2m
+        labels: {severity: critical, container: royal-redis}
+        annotations:
+          summary: "Контейнер royal-redis не запущен"
+
+      - alert: ContainerRestarting
+        expr: changes(container_start_time_seconds{name=~".+"}[15m]) > 2
+        labels: {severity: warning}
+        annotations:
+          summary: "Контейнер {{ $labels.name }} перезапускается"
+          description: "{{ $value }} запусков за 15 минут."
+
+  - name: host
+    rules:
+      - alert: HostMemoryLow
+        expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes < 0.10
+        for: 5m
+        labels: {severity: warning}
+        annotations:
+          summary: "Мало свободной памяти"
+          description: "Доступно {{ $value | humanizePercentage }} (swap на сервере нет)."
+
+      - alert: HostOomKill
+        expr: increase(node_vmstat_oom_kill[5m]) > 0
+        labels: {severity: critical}
+        annotations:
+          summary: "Ядро убило процесс из-за нехватки памяти (OOM)"
+
+      - alert: HostDiskUsage
+        expr: |
+          1 - node_filesystem_avail_bytes{mountpoint="/", fstype!~"tmpfs|overlay"}
+            / node_filesystem_size_bytes{mountpoint="/", fstype!~"tmpfs|overlay"} > 0.85
+        for: 10m
+        labels: {severity: warning}
+        annotations:
+          summary: "Диск заполнен больше чем на 85%"
+          description: "Занято {{ $value | humanizePercentage }}."
+
+      - alert: HostCpuHigh
+        expr: 100 - avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100 > 90
+        for: 15m
+        labels: {severity: warning}
+        annotations:
+          summary: "Процессор загружен больше 90% уже 15 минут"
+
+  - name: drinkmebot
+    rules:
+      - alert: BotErrors
+        expr: |
+          sum(increase(drinkme_update_seconds_count{outcome="error"}[10m])) > 3
+        labels: {severity: warning}
+        annotations:
+          summary: "Бот: рост ошибок обработки апдейтов"
+          description: "{{ $value | printf \"%.0f\" }} ошибок за 10 минут, подробности в логе бота."
+
+      - alert: BotSlow
+        expr: |
+          histogram_quantile(0.95, sum by (le) (rate(drinkme_update_seconds_bucket[10m]))) > 3
+        for: 10m
+        labels: {severity: warning}
+        annotations:
+          summary: "Бот отвечает медленно (p95 больше 3 секунд)"
+
+      - alert: BotHeapHigh
+        expr: |
+          sum(jvm_memory_used_bytes{application="drinkmebot", area="heap"})
+            / sum(jvm_memory_max_bytes{application="drinkmebot", area="heap"} > 0) > 0.9
+        for: 10m
+        labels: {severity: warning}
+        annotations:
+          summary: "Бот: куча JVM заполнена больше чем на 90%"
+
+      - alert: BotDbPoolExhausted
+        expr: hikaricp_connections_pending{application="drinkmebot"} > 0
+        for: 5m
+        labels: {severity: warning}
+        annotations:
+          summary: "Бот: запросы ждут свободное подключение к БД"

@@ -1,0 +1,109 @@
+# Стек мониторинга одного сервера: Prometheus + Alertmanager + Grafana + node_exporter + cAdvisor.
+# Все сервисы работают в сети хоста и слушают ТОЛЬКО 127.0.0.1 (наружу ничего не выставлено):
+# приложения (бот на 127.0.0.1:8019) доступны Prometheus по localhost, Grafana открывается по SSH-туннелю.
+#
+# Порты (проверены на сервере как свободные): Prometheus 9091, Alertmanager 9093, Grafana 3001,
+# node_exporter 9100, cAdvisor 8081.
+
+name: server-monitoring
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    container_name: monitoring-prometheus
+    network_mode: host
+    restart: unless-stopped
+    mem_limit: 768m
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=15d
+      - --web.listen-address=127.0.0.1:9091
+    volumes:
+      - ./prometheus:/etc/prometheus:ro
+      - prometheus_data:/prometheus
+    logging: &logging
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    container_name: monitoring-alertmanager
+    network_mode: host
+    restart: unless-stopped
+    mem_limit: 128m
+    command:
+      - --config.file=/etc/alertmanager/alertmanager.yml
+      - --storage.path=/alertmanager
+      - --web.listen-address=127.0.0.1:9093
+      # кластер не нужен; пустой адрес отключает порт 9094, который иначе слушал бы на всех интерфейсах
+      - --cluster.listen-address=
+    volumes:
+      # создаётся scripts/render-alertmanager.sh из шаблона и .env (содержит токен, в git не попадает)
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - alertmanager_data:/alertmanager
+    logging: *logging
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    container_name: monitoring-grafana
+    network_mode: host
+    restart: unless-stopped
+    mem_limit: 384m
+    environment:
+      GF_SERVER_HTTP_ADDR: 127.0.0.1
+      GF_SERVER_HTTP_PORT: "3001"
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?задайте GRAFANA_ADMIN_PASSWORD в .env}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    logging: *logging
+
+  node-exporter:
+    image: prom/node-exporter:v1.8.2
+    container_name: monitoring-node-exporter
+    network_mode: host
+    pid: host
+    restart: unless-stopped
+    mem_limit: 64m
+    command:
+      - --web.listen-address=127.0.0.1:9100
+      - --path.rootfs=/host
+    volumes:
+      - /:/host:ro,rslave
+    logging: *logging
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    container_name: monitoring-cadvisor
+    network_mode: host
+    restart: unless-stopped
+    mem_limit: 256m
+    privileged: true
+    devices:
+      - /dev/kmsg
+    command:
+      - --listen_ip=127.0.0.1
+      - --port=8081
+      - --docker_only=true
+      - --housekeeping_interval=30s
+      - --disable_metrics=percpu,sched,tcp,udp,advtcp,hugetlb,referenced_memory,cpu_topology,resctrl,process
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    logging: *logging
+
+volumes:
+  prometheus_data:
+  alertmanager_data:
+  grafana_data:
