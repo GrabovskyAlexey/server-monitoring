@@ -40,6 +40,18 @@ scrape_configs:
     static_configs:
       - targets: ["127.0.0.1:8099"]
 
+  # dcbot (контейнер dcbot, репозиторий DCBot): порт USE_PORT=8000
+  - job_name: dcbot
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ["127.0.0.1:8000"]
+
+  # dailycheckerbot (репозиторий DailyCheckerBot): порт USE_PORT=8001
+  - job_name: dailycheckerbot
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ["127.0.0.1:8001"]
+
   # Новое приложение с Micrometer подключается так же (порт смотрите в его .env):
   # - job_name: <имя>
   #   metrics_path: /actuator/prometheus

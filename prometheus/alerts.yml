@@ -9,8 +9,8 @@ groups:
           summary: "Цель {{ $labels.job }} не отдаёт метрики"
           description: "{{ $labels.instance }} недоступен 3 минуты (для drinkmebot это значит, что бот не запущен или завис)."
 
-      # Критичные контейнеры пропали из cAdvisor (остановлены или удалены). dcbot и dailycheckerbot
-      # запускаются вручную (restart=no), поэтому не входят. Новый контейнер добавляется копией правила.
+      # Критичные контейнеры пропали из cAdvisor (остановлены или удалены). Контейнеры должны
+      # иметь restart=unless-stopped, иначе после ручной остановки будут алерты. Новый контейнер добавляется копией правила.
       - alert: ContainerGone
         expr: absent(container_last_seen{name="drinkmebot"})
         for: 2m
@@ -52,6 +52,20 @@ groups:
         labels: {severity: critical, container: royal-redis}
         annotations:
           summary: "Контейнер royal-redis не запущен"
+
+      - alert: ContainerGone
+        expr: absent(container_last_seen{name="dcbot"})
+        for: 2m
+        labels: {severity: critical, container: dcbot}
+        annotations:
+          summary: "Контейнер dcbot не запущен"
+
+      - alert: ContainerGone
+        expr: absent(container_last_seen{name="dailycheckerbot"})
+        for: 2m
+        labels: {severity: critical, container: dailycheckerbot}
+        annotations:
+          summary: "Контейнер dailycheckerbot не запущен"
 
       - alert: ContainerRestarting
         expr: changes(container_start_time_seconds{name=~".+"}[15m]) > 2
