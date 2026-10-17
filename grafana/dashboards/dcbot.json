@@ -629,9 +629,9 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 58,
+        "y": 59,
         "w": 12,
-        "h": 18
+        "h": 19
       },
       "targets": [
         {
@@ -681,9 +681,9 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 58,
+        "y": 59,
         "w": 12,
-        "h": 18
+        "h": 19
       },
       "targets": [
         {
@@ -733,7 +733,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 63,
+        "y": 64,
         "w": 12,
         "h": 5
       },
@@ -785,7 +785,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 63,
+        "y": 64,
         "w": 12,
         "h": 5
       },
@@ -829,6 +829,110 @@
     },
     {
       "id": 19,
+      "type": "bargauge",
+      "title": "Долги: записей",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 73,
+        "w": 12,
+        "h": 9
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum by (direction, resource) (bot_debts{application=\"dungeoncrusherbot\"})",
+          "legendFormat": "{{direction}} {{resource}}",
+          "refId": "A",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "continuous-GrYlRd"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "namePlacement": "left",
+        "sizing": "manual",
+        "minVizHeight": 22,
+        "maxVizHeight": 22,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
+        }
+      }
+    },
+    {
+      "id": 20,
+      "type": "bargauge",
+      "title": "Долги: сумма",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 73,
+        "w": 12,
+        "h": 9
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum by (direction, resource) (bot_debts_amount{application=\"dungeoncrusherbot\"})",
+          "legendFormat": "{{direction}} {{resource}}",
+          "refId": "A",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "continuous-GrYlRd"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "namePlacement": "left",
+        "sizing": "manual",
+        "minVizHeight": 22,
+        "maxVizHeight": 22,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
+        }
+      }
+    },
+    {
+      "id": 21,
       "type": "timeseries",
       "title": "События обмена (за час)",
       "datasource": {
@@ -837,9 +941,9 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 71,
+        "y": 82,
         "w": 12,
-        "h": 8
+        "h": 9
       },
       "targets": [
         {
@@ -887,110 +991,6 @@
       }
     },
     {
-      "id": 20,
-      "type": "bargauge",
-      "title": "Долги: записей",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 71,
-        "w": 12,
-        "h": 10
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "sum by (direction, resource) (bot_debts{application=\"dungeoncrusherbot\"})",
-          "legendFormat": "{{direction}} {{resource}}",
-          "refId": "A",
-          "instant": true,
-          "range": false
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "color": {
-            "mode": "continuous-GrYlRd"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "orientation": "horizontal",
-        "displayMode": "gradient",
-        "showUnfilled": true,
-        "namePlacement": "left",
-        "sizing": "manual",
-        "minVizHeight": 22,
-        "maxVizHeight": 22,
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "values": false
-        }
-      }
-    },
-    {
-      "id": 21,
-      "type": "bargauge",
-      "title": "Долги: сумма",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 81,
-        "w": 12,
-        "h": 10
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "sum by (direction, resource) (bot_debts_amount{application=\"dungeoncrusherbot\"})",
-          "legendFormat": "{{direction}} {{resource}}",
-          "refId": "A",
-          "instant": true,
-          "range": false
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "color": {
-            "mode": "continuous-GrYlRd"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "orientation": "horizontal",
-        "displayMode": "gradient",
-        "showUnfilled": true,
-        "namePlacement": "left",
-        "sizing": "manual",
-        "minVizHeight": 22,
-        "maxVizHeight": 22,
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "values": false
-        }
-      }
-    },
-    {
       "id": 22,
       "type": "bargauge",
       "title": "Пользователи по языку",
@@ -1000,9 +1000,9 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 81,
+        "y": 82,
         "w": 12,
-        "h": 10
+        "h": 9
       },
       "targets": [
         {
@@ -1052,7 +1052,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 89,
+        "y": 90,
         "w": 12,
         "h": 8
       },
@@ -1102,7 +1102,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 89,
+        "y": 90,
         "w": 12,
         "h": 8
       },
