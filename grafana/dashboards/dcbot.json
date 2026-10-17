@@ -757,7 +757,56 @@
             "mode": "continuous-GrYlRd"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SIEGE enabled=true"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Осада ✅"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SIEGE enabled=false"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Осада ❌"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MINE enabled=true"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Шахта ✅"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MINE enabled=false"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Шахта ❌"
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "orientation": "horizontal",
@@ -809,7 +858,56 @@
             "mode": "continuous-GrYlRd"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "EXCHANGE_MAP"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Обмен карт"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SELL_MAP"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Продажа карт"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "BUY_MAP"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Покупка карт"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "EXCHANGE_VOID"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Обмен пустот"
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "orientation": "horizontal",
@@ -861,7 +959,128 @@
             "mode": "continuous-GrYlRd"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "I_OWE VOID"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Я должен: пустоты"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "I_OWE MAP"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Я должен: карты"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "I_OWE CB"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Я должен: КБ"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "I_OWE CANNON"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Я должен: пушка"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "I_OWE BOTTLES"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Я должен: ящик бутылок"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OWE_ME VOID"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Мне должны: пустоты"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OWE_ME MAP"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Мне должны: карты"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OWE_ME CB"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Мне должны: КБ"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OWE_ME CANNON"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Мне должны: пушка"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OWE_ME BOTTLES"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Мне должны: ящик бутылок"
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "orientation": "horizontal",
@@ -913,7 +1132,128 @@
             "mode": "continuous-GrYlRd"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "I_OWE VOID"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Я должен: пустоты"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "I_OWE MAP"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Я должен: карты"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "I_OWE CB"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Я должен: КБ"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "I_OWE CANNON"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Я должен: пушка"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "I_OWE BOTTLES"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Я должен: ящик бутылок"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OWE_ME VOID"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Мне должны: пустоты"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OWE_ME MAP"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Мне должны: карты"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OWE_ME CB"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Мне должны: КБ"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OWE_ME CANNON"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Мне должны: пушка"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OWE_ME BOTTLES"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Мне должны: ящик бутылок"
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "orientation": "horizontal",
