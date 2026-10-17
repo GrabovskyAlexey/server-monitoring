@@ -232,3 +232,84 @@ groups:
         annotations:
           summary: "Pikabu: очередь загрузок не разбирается"
           description: "В очереди {{ $value }} задач уже 15 минут."
+
+  - name: royalguardians
+    rules:
+      - alert: RgHttp5xx
+        expr: |
+          sum(rate(http_server_requests_seconds_count{application="royalguardians", status=~"5.."}[5m]))
+            / sum(rate(http_server_requests_seconds_count{application="royalguardians"}[5m])) > 0.05
+          and sum(rate(http_server_requests_seconds_count{application="royalguardians"}[5m])) > 0.05
+        for: 5m
+        labels: {severity: warning}
+        annotations:
+          summary: "Royal Guardians: больше 5% запросов заканчиваются ошибкой 5xx"
+          description: "Доля 5xx {{ $value | humanizePercentage }}, подробности в логе backend."
+
+      - alert: RgSlow
+        expr: |
+          histogram_quantile(0.95, sum by (le) (rate(http_server_requests_seconds_bucket{application="royalguardians", uri!~"/actuator.*"}[10m]))) > 2
+        for: 10m
+        labels: {severity: warning}
+        annotations:
+          summary: "Royal Guardians: backend отвечает медленно (p95 больше 2 секунд)"
+
+      - alert: RgHeapHigh
+        expr: |
+          sum(jvm_memory_used_bytes{application="royalguardians", area="heap"})
+            / sum(jvm_memory_max_bytes{application="royalguardians", area="heap"} > 0) > 0.9
+        for: 10m
+        labels: {severity: warning}
+        annotations:
+          summary: "Royal Guardians: куча JVM заполнена больше чем на 90%"
+
+      - alert: RgDbPoolExhausted
+        expr: hikaricp_connections_pending{application="royalguardians"} > 0
+        for: 5m
+        labels: {severity: warning}
+        annotations:
+          summary: "Royal Guardians: запросы ждут свободное подключение к БД"
+
+      - alert: RgLoginFailuresBurst
+        expr: sum(increase(rg_auth_total{event="login", outcome=~"bad_password|unknown_user"}[10m])) > 30
+        labels: {severity: warning}
+        annotations:
+          summary: "Royal Guardians: всплеск неудачных входов (возможен подбор паролей)"
+          description: "{{ $value | printf \"%.0f\" }} неудачных входов за 10 минут."
+
+      - alert: RgRateLimitBurst
+        expr: sum(increase(rg_rate_limit_rejected_total[10m])) > 20
+        labels: {severity: warning}
+        annotations:
+          summary: "Royal Guardians: много запросов отклонено лимитером"
+          description: "{{ $value | printf \"%.0f\" }} отказов за 10 минут, проверьте источник трафика."
+
+      - alert: RgSsrErrors
+        expr: sum(increase(ssr_render_duration_seconds_count{outcome=~"error|api_error"}[10m])) > 5
+        labels: {severity: warning}
+        annotations:
+          summary: "Royal Guardians SSR: ошибки серверного рендера"
+          description: "{{ $value | printf \"%.0f\" }} ошибок за 10 минут (api_error — backend не ответил SSR)."
+
+      - alert: RgSsrSlow
+        expr: histogram_quantile(0.95, sum by (le) (rate(ssr_render_duration_seconds_bucket[10m]))) > 3
+        for: 10m
+        labels: {severity: warning}
+        annotations:
+          summary: "Royal Guardians SSR: страницы рендерятся медленно (p95 больше 3 секунд)"
+
+      - alert: RgFrontendErrors
+        expr: sum(increase(frontend_errors_total[30m])) > 20
+        labels: {severity: warning}
+        annotations:
+          summary: "Royal Guardians: всплеск ошибок JavaScript в браузерах"
+          description: "{{ $value | printf \"%.0f\" }} ошибок за 30 минут, смотрите дашборд Royal Guardians."
+
+      - alert: RgWebVitalsPoor
+        expr: |
+          histogram_quantile(0.75, sum by (le) (rate(frontend_web_vital_bucket{name="LCP"}[1h]))) > 4000
+          and sum(increase(frontend_web_vital_count{name="LCP"}[1h])) > 20
+        for: 1h
+        labels: {severity: warning}
+        annotations:
+          summary: "Royal Guardians: LCP (p75) хуже 4 секунд, страницы грузятся медленно"

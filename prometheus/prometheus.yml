@@ -58,6 +58,17 @@ scrape_configs:
     static_configs:
       - targets: ["127.0.0.1:8087"]
 
+  # royalguardians (backend, контейнер royalguardians-backend): actuator на отдельном порту 127.0.0.1:8089 (MANAGEMENT_SERVER_PORT)
+  - job_name: royalguardians
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ["127.0.0.1:8089"]
+
+  # royalguardians SSR (node, systemd user service royalguardians-ssr): метрики на 127.0.0.1:4174 (SSR_METRICS_PORT)
+  - job_name: royalguardians-ssr
+    static_configs:
+      - targets: ["127.0.0.1:4174"]
+
   # Новое приложение с Micrometer подключается так же (порт смотрите в его .env):
   # - job_name: <имя>
   #   metrics_path: /actuator/prometheus
