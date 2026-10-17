@@ -629,9 +629,9 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 62,
+        "y": 64,
         "w": 12,
-        "h": 22
+        "h": 24
       },
       "targets": [
         {
@@ -659,8 +659,10 @@
         "orientation": "horizontal",
         "displayMode": "gradient",
         "showUnfilled": true,
-        "minVizHeight": 18,
-        "maxVizHeight": 30,
+        "namePlacement": "left",
+        "sizing": "manual",
+        "minVizHeight": 22,
+        "maxVizHeight": 22,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -679,9 +681,9 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 62,
+        "y": 64,
         "w": 12,
-        "h": 22
+        "h": 24
       },
       "targets": [
         {
@@ -709,8 +711,10 @@
         "orientation": "horizontal",
         "displayMode": "gradient",
         "showUnfilled": true,
-        "minVizHeight": 18,
-        "maxVizHeight": 30,
+        "namePlacement": "left",
+        "sizing": "manual",
+        "minVizHeight": 22,
+        "maxVizHeight": 22,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -729,9 +733,9 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 70,
+        "y": 71,
         "w": 12,
-        "h": 8
+        "h": 7
       },
       "targets": [
         {
@@ -759,8 +763,10 @@
         "orientation": "horizontal",
         "displayMode": "gradient",
         "showUnfilled": true,
-        "minVizHeight": 18,
-        "maxVizHeight": 30,
+        "namePlacement": "left",
+        "sizing": "manual",
+        "minVizHeight": 22,
+        "maxVizHeight": 22,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -779,9 +785,9 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 70,
+        "y": 71,
         "w": 12,
-        "h": 8
+        "h": 7
       },
       "targets": [
         {
@@ -809,8 +815,10 @@
         "orientation": "horizontal",
         "displayMode": "gradient",
         "showUnfilled": true,
-        "minVizHeight": 18,
-        "maxVizHeight": 30,
+        "namePlacement": "left",
+        "sizing": "manual",
+        "minVizHeight": 22,
+        "maxVizHeight": 22,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -829,7 +837,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 78,
+        "y": 79,
         "w": 12,
         "h": 8
       },
@@ -888,9 +896,9 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 78,
+        "y": 79,
         "w": 12,
-        "h": 8
+        "h": 13
       },
       "targets": [
         {
@@ -918,8 +926,10 @@
         "orientation": "horizontal",
         "displayMode": "gradient",
         "showUnfilled": true,
-        "minVizHeight": 18,
-        "maxVizHeight": 30,
+        "namePlacement": "left",
+        "sizing": "manual",
+        "minVizHeight": 22,
+        "maxVizHeight": 22,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -938,9 +948,9 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 86,
+        "y": 92,
         "w": 12,
-        "h": 8
+        "h": 13
       },
       "targets": [
         {
@@ -968,8 +978,10 @@
         "orientation": "horizontal",
         "displayMode": "gradient",
         "showUnfilled": true,
-        "minVizHeight": 18,
-        "maxVizHeight": 30,
+        "namePlacement": "left",
+        "sizing": "manual",
+        "minVizHeight": 22,
+        "maxVizHeight": 22,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -988,9 +1000,9 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 86,
+        "y": 92,
         "w": 12,
-        "h": 8
+        "h": 13
       },
       "targets": [
         {
@@ -1018,8 +1030,10 @@
         "orientation": "horizontal",
         "displayMode": "gradient",
         "showUnfilled": true,
-        "minVizHeight": 18,
-        "maxVizHeight": 30,
+        "namePlacement": "left",
+        "sizing": "manual",
+        "minVizHeight": 22,
+        "maxVizHeight": 22,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1038,7 +1052,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 94,
+        "y": 100,
         "w": 12,
         "h": 8
       },
@@ -1088,7 +1102,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 94,
+        "y": 100,
         "w": 12,
         "h": 8
       },
