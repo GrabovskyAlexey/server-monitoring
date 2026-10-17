@@ -622,16 +622,16 @@
     {
       "id": 15,
       "type": "bargauge",
-      "title": "Подписчики по серверам (топ 10)",
+      "title": "Подписчики по серверам",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
         "x": 0,
-        "y": 48,
+        "y": 54,
         "w": 12,
-        "h": 8
+        "h": 14
       },
       "targets": [
         {
@@ -639,7 +639,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "topk(10, bot_server_subscribers{application=\"dungeoncrusherbot\"})",
+          "expr": "sort_desc(bot_server_subscribers{application=\"dungeoncrusherbot\"})",
           "legendFormat": "{{server}}",
           "refId": "A",
           "instant": true,
@@ -670,16 +670,16 @@
     {
       "id": 16,
       "type": "bargauge",
-      "title": "Основные серверы игроков (топ 10)",
+      "title": "Основной сервер игроков (включая «Не выбран»)",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
         "x": 12,
-        "y": 48,
+        "y": 54,
         "w": 12,
-        "h": 8
+        "h": 14
       },
       "targets": [
         {
@@ -687,7 +687,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "topk(10, bot_server_main_players{application=\"dungeoncrusherbot\"})",
+          "expr": "sort_desc(bot_server_main_players{application=\"dungeoncrusherbot\"})",
           "legendFormat": "{{server}}",
           "refId": "A",
           "instant": true,
@@ -725,7 +725,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 56,
+        "y": 62,
         "w": 12,
         "h": 8
       },
@@ -773,7 +773,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 56,
+        "y": 62,
         "w": 12,
         "h": 8
       },
@@ -821,7 +821,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 64,
+        "y": 70,
         "w": 12,
         "h": 8
       },
@@ -880,7 +880,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 64,
+        "y": 70,
         "w": 12,
         "h": 8
       },
@@ -928,7 +928,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 72,
+        "y": 78,
         "w": 12,
         "h": 8
       },
@@ -976,7 +976,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 72,
+        "y": 78,
         "w": 12,
         "h": 8
       },
@@ -1024,7 +1024,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 80,
+        "y": 86,
         "w": 12,
         "h": 8
       },
@@ -1074,7 +1074,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 80,
+        "y": 86,
         "w": 12,
         "h": 8
       },
