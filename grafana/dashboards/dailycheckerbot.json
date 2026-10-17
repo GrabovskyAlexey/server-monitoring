@@ -167,7 +167,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(increase(bot_update_seconds_count{application=\"dcdaylycheckerbot\",outcome=\"error\"}[24h])) + sum(increase(bot_job_seconds_count{application=\"dcdaylycheckerbot\",outcome=\"error\"}[24h]))",
+          "expr": "(sum(increase(bot_update_seconds_count{application=\"dcdaylycheckerbot\",outcome=\"error\"}[24h])) or vector(0)) + (sum(increase(bot_job_seconds_count{application=\"dcdaylycheckerbot\",outcome=\"error\"}[24h])) or vector(0))",
           "legendFormat": "",
           "refId": "A"
         }

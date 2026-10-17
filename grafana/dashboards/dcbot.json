@@ -167,7 +167,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(increase(bot_update_seconds_count{application=\"dungeoncrusherbot\",outcome=\"error\"}[24h])) + sum(increase(bot_job_seconds_count{application=\"dungeoncrusherbot\",outcome=\"error\"}[24h]))",
+          "expr": "(sum(increase(bot_update_seconds_count{application=\"dungeoncrusherbot\",outcome=\"error\"}[24h])) or vector(0)) + (sum(increase(bot_job_seconds_count{application=\"dungeoncrusherbot\",outcome=\"error\"}[24h])) or vector(0))",
           "legendFormat": "",
           "refId": "A"
         }
@@ -629,9 +629,9 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 66,
+        "y": 62,
         "w": 12,
-        "h": 26
+        "h": 22
       },
       "targets": [
         {
@@ -660,7 +660,7 @@
         "displayMode": "gradient",
         "showUnfilled": true,
         "minVizHeight": 18,
-        "maxVizHeight": 300,
+        "maxVizHeight": 30,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -679,9 +679,9 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 66,
+        "y": 62,
         "w": 12,
-        "h": 26
+        "h": 22
       },
       "targets": [
         {
@@ -710,7 +710,7 @@
         "displayMode": "gradient",
         "showUnfilled": true,
         "minVizHeight": 18,
-        "maxVizHeight": 300,
+        "maxVizHeight": 30,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -729,7 +729,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 74,
+        "y": 70,
         "w": 12,
         "h": 8
       },
@@ -760,7 +760,7 @@
         "displayMode": "gradient",
         "showUnfilled": true,
         "minVizHeight": 18,
-        "maxVizHeight": 300,
+        "maxVizHeight": 30,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -779,7 +779,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 74,
+        "y": 70,
         "w": 12,
         "h": 8
       },
@@ -810,7 +810,7 @@
         "displayMode": "gradient",
         "showUnfilled": true,
         "minVizHeight": 18,
-        "maxVizHeight": 300,
+        "maxVizHeight": 30,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -829,7 +829,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 82,
+        "y": 78,
         "w": 12,
         "h": 8
       },
@@ -888,7 +888,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 82,
+        "y": 78,
         "w": 12,
         "h": 8
       },
@@ -919,7 +919,7 @@
         "displayMode": "gradient",
         "showUnfilled": true,
         "minVizHeight": 18,
-        "maxVizHeight": 300,
+        "maxVizHeight": 30,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -938,7 +938,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 90,
+        "y": 86,
         "w": 12,
         "h": 8
       },
@@ -969,7 +969,7 @@
         "displayMode": "gradient",
         "showUnfilled": true,
         "minVizHeight": 18,
-        "maxVizHeight": 300,
+        "maxVizHeight": 30,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -988,7 +988,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 90,
+        "y": 86,
         "w": 12,
         "h": 8
       },
@@ -1019,7 +1019,7 @@
         "displayMode": "gradient",
         "showUnfilled": true,
         "minVizHeight": 18,
-        "maxVizHeight": 300,
+        "maxVizHeight": 30,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1038,7 +1038,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 98,
+        "y": 94,
         "w": 12,
         "h": 8
       },
@@ -1088,7 +1088,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 98,
+        "y": 94,
         "w": 12,
         "h": 8
       },
