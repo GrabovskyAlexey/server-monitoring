@@ -96,6 +96,14 @@ groups:
         labels: {severity: critical}
         annotations:
           summary: "Ядро убило процесс из-за нехватки памяти (OOM)"
+          description: "Какой именно процесс, метрика не знает. На сервере: journalctl -k --since '-30 min' | grep -i 'killed process' (в строке имя процесса и его память). Если убит контейнер, смотрите алерт ContainerOomKilled и docker inspect -f '{{.State.OOMKilled}}' <имя>."
+
+      - alert: ContainerOomKilled
+        expr: increase(container_oom_events_total{name!=""}[5m]) > 0
+        labels: {severity: critical}
+        annotations:
+          summary: "Контейнер {{ $labels.name }} убит из-за нехватки памяти (OOM)"
+          description: "Достиг лимита памяти контейнера или памяти хоста. Проверьте -Xmx/лимит памяти и график памяти контейнера в дашборде Docker."
 
       - alert: HostDiskUsage
         expr: |

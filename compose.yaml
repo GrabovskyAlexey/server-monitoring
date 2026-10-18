@@ -13,7 +13,10 @@ services:
     container_name: monitoring-prometheus
     network_mode: host
     restart: unless-stopped
-    mem_limit: 768m
+    mem_limit: 1280m
+    environment:
+      # мягкий предел Go: сборщик мусора работает активнее до того, как контейнер упрётся в mem_limit и будет убит (OOM)
+      GOMEMLIMIT: 1100MiB
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --storage.tsdb.path=/prometheus
