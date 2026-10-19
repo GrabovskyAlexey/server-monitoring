@@ -666,7 +666,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum by (status) (rate(http_server_requests_seconds_count{application=\"royalguardians\",uri!~\"/actuator.*\"}[5m])) * 60",
+          "expr": "sum by (status) (rate(http_server_requests_seconds_count{application=\"royalguardians\",uri!~\"/actuator.*|/api/v1/public/metrics/frontend\"}[5m])) * 60",
           "legendFormat": "{{status}}",
           "refId": "A"
         }
@@ -707,7 +707,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "histogram_quantile(0.5, sum by (le) (rate(http_server_requests_seconds_bucket{application=\"royalguardians\",uri!~\"/actuator.*\"}[5m])))",
+          "expr": "histogram_quantile(0.5, sum by (le) (rate(http_server_requests_seconds_bucket{application=\"royalguardians\",uri!~\"/actuator.*|/api/v1/public/metrics/frontend\"}[5m])))",
           "legendFormat": "p50",
           "refId": "A"
         },
@@ -716,7 +716,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_requests_seconds_bucket{application=\"royalguardians\",uri!~\"/actuator.*\"}[5m])))",
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_requests_seconds_bucket{application=\"royalguardians\",uri!~\"/actuator.*|/api/v1/public/metrics/frontend\"}[5m])))",
           "legendFormat": "p95",
           "refId": "B"
         },
@@ -725,7 +725,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "histogram_quantile(0.99, sum by (le) (rate(http_server_requests_seconds_bucket{application=\"royalguardians\",uri!~\"/actuator.*\"}[5m])))",
+          "expr": "histogram_quantile(0.99, sum by (le) (rate(http_server_requests_seconds_bucket{application=\"royalguardians\",uri!~\"/actuator.*|/api/v1/public/metrics/frontend\"}[5m])))",
           "legendFormat": "p99",
           "refId": "C"
         }
@@ -766,7 +766,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "topk(8, sum by (uri) (rate(http_server_requests_seconds_count{application=\"royalguardians\",uri!~\"/actuator.*\"}[15m])) * 60)",
+          "expr": "topk(8, sum by (uri) (rate(http_server_requests_seconds_count{application=\"royalguardians\",uri!~\"/actuator.*|/api/v1/public/metrics/frontend\"}[15m])) * 60)",
           "legendFormat": "{{uri}}",
           "refId": "A"
         }
@@ -807,7 +807,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "topk(8, histogram_quantile(0.95, sum by (le, uri) (rate(http_server_requests_seconds_bucket{application=\"royalguardians\",uri!~\"/actuator.*\"}[15m]))))",
+          "expr": "topk(8, histogram_quantile(0.95, sum by (le, uri) (rate(http_server_requests_seconds_bucket{application=\"royalguardians\",uri!~\"/actuator.*|/api/v1/public/metrics/frontend\"}[15m]))))",
           "legendFormat": "{{uri}}",
           "refId": "A"
         }
@@ -946,7 +946,8 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -987,7 +988,8 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1033,7 +1035,8 @@
           "unit": "short",
           "color": {
             "mode": "continuous-GrYlRd"
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1085,7 +1088,8 @@
           "unit": "short",
           "color": {
             "mode": "continuous-GrYlRd"
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1137,7 +1141,8 @@
           "unit": "short",
           "color": {
             "mode": "continuous-GrYlRd"
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1189,7 +1194,8 @@
           "unit": "short",
           "color": {
             "mode": "continuous-GrYlRd"
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
