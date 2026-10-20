@@ -1328,7 +1328,44 @@
         "defaults": {
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "verified"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Подтверждённые"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "unverified"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Не подтверждённые"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "disabled"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Отключённые"
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "pieType": "donut",
@@ -1384,7 +1421,128 @@
         "defaults": {
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ROLE_ADMIN"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Администратор"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ROLE_USER"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Пользователь"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ROLE_UNVERIFIED"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Не подтверждён"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ROLE_CLAN_COUNCIL"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Совет клана"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ROLE_CLAN_OFFICER"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Офицер клана"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ROLE_CLAN_MEMBER"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Участник клана"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ROLE_ALLIANCE_COUNCIL_HARD"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Совет альянса HARD"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ROLE_ALLIANCE_COUNCIL_RG"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Совет альянса RG"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ROLE_ALLIANCE_MEMBER_HARD"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Участник альянса HARD"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ROLE_ALLIANCE_MEMBER_RG"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Участник альянса RG"
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "pieType": "donut",
@@ -1440,7 +1598,32 @@
         "defaults": {
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "with"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "С кланом"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "without"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Без клана"
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "pieType": "donut",
@@ -1645,7 +1828,7 @@
         "x": 0,
         "y": 94,
         "w": 12,
-        "h": 4
+        "h": 5
       },
       "targets": [
         {
@@ -1664,7 +1847,44 @@
         "defaults": {
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "day"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "За сутки"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "week"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "За неделю"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "month"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "За месяц"
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -1676,7 +1896,12 @@
         "textMode": "value_and_name",
         "colorMode": "none",
         "graphMode": "none",
-        "orientation": "horizontal"
+        "orientation": "vertical",
+        "justifyMode": "center",
+        "text": {
+          "titleSize": 13,
+          "valueSize": 28
+        }
       }
     },
     {
@@ -1691,7 +1916,7 @@
         "x": 12,
         "y": 94,
         "w": 12,
-        "h": 4
+        "h": 5
       },
       "targets": [
         {
@@ -1710,7 +1935,44 @@
         "defaults": {
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "day"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "За сутки"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "week"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "За неделю"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "month"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "За месяц"
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -1722,7 +1984,12 @@
         "textMode": "value_and_name",
         "colorMode": "none",
         "graphMode": "none",
-        "orientation": "horizontal"
+        "orientation": "vertical",
+        "justifyMode": "center",
+        "text": {
+          "titleSize": 13,
+          "valueSize": 28
+        }
       }
     },
     {
@@ -1735,9 +2002,9 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 98,
+        "y": 99,
         "w": 12,
-        "h": 4
+        "h": 5
       },
       "targets": [
         {
@@ -1767,7 +2034,56 @@
         "defaults": {
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "кланы true"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Кланы активные"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "кланы false"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Кланы неактивные"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "альянсы true"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Альянсы активные"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "альянсы false"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Альянсы неактивные"
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -1779,7 +2095,12 @@
         "textMode": "value_and_name",
         "colorMode": "none",
         "graphMode": "none",
-        "orientation": "horizontal"
+        "orientation": "vertical",
+        "justifyMode": "center",
+        "text": {
+          "titleSize": 13,
+          "valueSize": 28
+        }
       }
     },
     {
@@ -1792,9 +2113,9 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 98,
+        "y": 99,
         "w": 12,
-        "h": 4
+        "h": 5
       },
       "targets": [
         {
@@ -1813,7 +2134,32 @@
         "defaults": {
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "email_verification"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Подтверждение email"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "password_reset"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Сброс пароля"
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -1825,7 +2171,12 @@
         "textMode": "value_and_name",
         "colorMode": "none",
         "graphMode": "none",
-        "orientation": "horizontal"
+        "orientation": "vertical",
+        "justifyMode": "center",
+        "text": {
+          "titleSize": 13,
+          "valueSize": 28
+        }
       }
     },
     {
@@ -1838,9 +2189,9 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 102,
+        "y": 104,
         "w": 12,
-        "h": 4
+        "h": 5
       },
       "targets": [
         {
@@ -1859,7 +2210,56 @@
         "defaults": {
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SIEGE public=true"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Осада: публичные"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SIEGE public=false"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Осада: приватные"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "LABYRINTH public=true"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Лабиринт: публичные"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "LABYRINTH public=false"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Лабиринт: приватные"
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -1871,7 +2271,12 @@
         "textMode": "value_and_name",
         "colorMode": "none",
         "graphMode": "none",
-        "orientation": "horizontal"
+        "orientation": "vertical",
+        "justifyMode": "center",
+        "text": {
+          "titleSize": 13,
+          "valueSize": 28
+        }
       }
     },
     {
@@ -1884,9 +2289,9 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 102,
+        "y": 104,
         "w": 12,
-        "h": 4
+        "h": 5
       },
       "targets": [
         {
@@ -1905,7 +2310,56 @@
         "defaults": {
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SIEGE public=true"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Осада: публичные"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SIEGE public=false"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Осада: приватные"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "LABYRINTH public=true"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Лабиринт: публичные"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "LABYRINTH public=false"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Лабиринт: приватные"
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -1917,7 +2371,12 @@
         "textMode": "value_and_name",
         "colorMode": "none",
         "graphMode": "none",
-        "orientation": "horizontal"
+        "orientation": "vertical",
+        "justifyMode": "center",
+        "text": {
+          "titleSize": 13,
+          "valueSize": 28
+        }
       }
     },
     {
@@ -1930,9 +2389,9 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 106,
+        "y": 109,
         "w": 24,
-        "h": 4
+        "h": 5
       },
       "targets": [
         {
@@ -1951,7 +2410,44 @@
         "defaults": {
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "decks"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Колоды"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hero_progress"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Прогресс героев"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "selected_heroes"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Выбранные герои"
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -1963,7 +2459,12 @@
         "textMode": "value_and_name",
         "colorMode": "none",
         "graphMode": "none",
-        "orientation": "horizontal"
+        "orientation": "vertical",
+        "justifyMode": "center",
+        "text": {
+          "titleSize": 13,
+          "valueSize": 28
+        }
       }
     },
     {
@@ -1976,7 +2477,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 110,
+        "y": 114,
         "w": 12,
         "h": 17
       },
@@ -2078,7 +2579,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 110,
+        "y": 114,
         "w": 12,
         "h": 17
       },
@@ -2177,7 +2678,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 127,
+        "y": 131,
         "w": 12,
         "h": 9
       },
@@ -2225,6 +2726,56 @@
                 "value": {
                   "mode": "continuous-GrYlRd"
                 }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "kind"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "heroes": {
+                        "text": "Герои",
+                        "index": 0
+                      },
+                      "items": {
+                        "text": "Предметы",
+                        "index": 1
+                      },
+                      "bosses": {
+                        "text": "Боссы",
+                        "index": 2
+                      },
+                      "runes": {
+                        "text": "Руны",
+                        "index": 3
+                      },
+                      "recipes": {
+                        "text": "Рецепты",
+                        "index": 4
+                      },
+                      "articles": {
+                        "text": "Статьи",
+                        "index": 5
+                      },
+                      "chronicles": {
+                        "text": "Хроники",
+                        "index": 6
+                      },
+                      "calendar_events": {
+                        "text": "События календаря",
+                        "index": 7
+                      }
+                    }
+                  }
+                ]
               }
             ]
           }
@@ -2276,7 +2827,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 127,
+        "y": 131,
         "w": 6,
         "h": 4
       },
@@ -2333,7 +2884,7 @@
       },
       "gridPos": {
         "x": 18,
-        "y": 127,
+        "y": 131,
         "w": 6,
         "h": 4
       },
@@ -2390,7 +2941,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 136,
+        "y": 140,
         "w": 6,
         "h": 4
       },
@@ -2447,7 +2998,7 @@
       },
       "gridPos": {
         "x": 6,
-        "y": 136,
+        "y": 140,
         "w": 6,
         "h": 4
       },
@@ -2487,7 +3038,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 136,
+        "y": 140,
         "w": 12,
         "h": 8
       },
@@ -2555,7 +3106,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 144,
+        "y": 148,
         "w": 12,
         "h": 8
       },
@@ -2596,7 +3147,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 144,
+        "y": 148,
         "w": 12,
         "h": 8
       },
@@ -2637,7 +3188,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 152,
+        "y": 156,
         "w": 12,
         "h": 8
       },
@@ -2678,7 +3229,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 152,
+        "y": 156,
         "w": 12,
         "h": 8
       },
@@ -2719,7 +3270,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 160,
+        "y": 164,
         "w": 12,
         "h": 8
       },
@@ -2769,7 +3320,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 160,
+        "y": 164,
         "w": 12,
         "h": 8
       },
@@ -2810,7 +3361,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 168,
+        "y": 172,
         "w": 12,
         "h": 8
       },
@@ -2851,7 +3402,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 168,
+        "y": 172,
         "w": 12,
         "h": 8
       },
@@ -2892,7 +3443,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 176,
+        "y": 180,
         "w": 12,
         "h": 8
       },
@@ -2933,7 +3484,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 176,
+        "y": 180,
         "w": 12,
         "h": 8
       },
@@ -2983,7 +3534,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 184,
+        "y": 188,
         "w": 12,
         "h": 8
       },
@@ -3024,7 +3575,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 184,
+        "y": 188,
         "w": 12,
         "h": 8
       },
@@ -3065,7 +3616,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 192,
+        "y": 196,
         "w": 12,
         "h": 8
       },
@@ -3115,7 +3666,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 192,
+        "y": 196,
         "w": 12,
         "h": 8
       },
