@@ -1901,7 +1901,7 @@
       "gridPos": {
         "x": 0,
         "y": 94,
-        "w": 12,
+        "w": 8,
         "h": 6
       },
       "targets": [
@@ -2057,9 +2057,9 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 12,
+        "x": 8,
         "y": 94,
-        "w": 12,
+        "w": 8,
         "h": 6
       },
       "targets": [
@@ -2207,9 +2207,9 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 0,
-        "y": 100,
-        "w": 12,
+        "x": 16,
+        "y": 94,
+        "w": 8,
         "h": 6
       },
       "targets": [
@@ -2366,301 +2366,14 @@
     {
       "id": 38,
       "type": "table",
-      "title": "Использование функций",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 100,
-        "w": 12,
-        "h": 6
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "rg_users_feature{application=\"royalguardians\"}",
-          "legendFormat": "",
-          "refId": "A",
-          "instant": true,
-          "range": false,
-          "format": "table"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "custom": {
-            "align": "auto"
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Value"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Пользователей"
-              },
-              {
-                "id": "custom.cellOptions",
-                "value": {
-                  "type": "gauge",
-                  "mode": "gradient"
-                }
-              },
-              {
-                "id": "color",
-                "value": {
-                  "mode": "continuous-GrYlRd"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "feature"
-            },
-            "properties": [
-              {
-                "id": "mappings",
-                "value": [
-                  {
-                    "type": "value",
-                    "options": {
-                      "decks": {
-                        "text": "Колоды",
-                        "index": 0
-                      },
-                      "hero_progress": {
-                        "text": "Прогресс героев",
-                        "index": 1
-                      },
-                      "selected_heroes": {
-                        "text": "Выбранные герои",
-                        "index": 2
-                      }
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Функция"
-            },
-            "properties": [
-              {
-                "id": "mappings",
-                "value": [
-                  {
-                    "type": "value",
-                    "options": {
-                      "decks": {
-                        "text": "Колоды",
-                        "index": 0
-                      },
-                      "hero_progress": {
-                        "text": "Прогресс героев",
-                        "index": 1
-                      },
-                      "selected_heroes": {
-                        "text": "Выбранные герои",
-                        "index": 2
-                      }
-                    }
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "sortBy": [
-          {
-            "displayName": "Пользователей",
-            "desc": true
-          }
-        ]
-      },
-      "transformations": [
-        {
-          "id": "filterFieldsByName",
-          "options": {
-            "include": {
-              "names": [
-                "feature",
-                "Value"
-              ]
-            }
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "indexByName": {
-              "feature": 0,
-              "Value": 1
-            },
-            "renameByName": {
-              "feature": "Функция"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "id": 39,
-      "type": "table",
-      "title": "Неиспользованные токены",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 106,
-        "w": 12,
-        "h": 6
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "rg_tokens_pending{application=\"royalguardians\"}",
-          "legendFormat": "",
-          "refId": "A",
-          "instant": true,
-          "range": false,
-          "format": "table"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "custom": {
-            "align": "auto"
-          },
-          "noValue": "0"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "kind"
-            },
-            "properties": [
-              {
-                "id": "mappings",
-                "value": [
-                  {
-                    "type": "value",
-                    "options": {
-                      "email_verification": {
-                        "text": "Подтверждение email",
-                        "index": 0
-                      },
-                      "password_reset": {
-                        "text": "Сброс пароля",
-                        "index": 1
-                      }
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Тип"
-            },
-            "properties": [
-              {
-                "id": "mappings",
-                "value": [
-                  {
-                    "type": "value",
-                    "options": {
-                      "email_verification": {
-                        "text": "Подтверждение email",
-                        "index": 0
-                      },
-                      "password_reset": {
-                        "text": "Сброс пароля",
-                        "index": 1
-                      }
-                    }
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "sortBy": [
-          {
-            "displayName": "Тип",
-            "desc": false
-          }
-        ]
-      },
-      "transformations": [
-        {
-          "id": "filterFieldsByName",
-          "options": {
-            "include": {
-              "names": [
-                "kind",
-                "Value"
-              ]
-            }
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "indexByName": {
-              "kind": 0,
-              "Value": 1
-            },
-            "renameByName": {
-              "kind": "Тип",
-              "Value": "Количество"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "id": 40,
-      "type": "table",
       "title": "Контент",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 12,
-        "y": 106,
+        "x": 0,
+        "y": 100,
         "w": 12,
         "h": 9
       },
@@ -2850,6 +2563,293 @@
       ]
     },
     {
+      "id": 39,
+      "type": "table",
+      "title": "Неиспользованные токены",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 100,
+        "w": 12,
+        "h": 4
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "rg_tokens_pending{application=\"royalguardians\"}",
+          "legendFormat": "",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "align": "auto"
+          },
+          "noValue": "0"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "kind"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "email_verification": {
+                        "text": "Подтверждение email",
+                        "index": 0
+                      },
+                      "password_reset": {
+                        "text": "Сброс пароля",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Тип"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "email_verification": {
+                        "text": "Подтверждение email",
+                        "index": 0
+                      },
+                      "password_reset": {
+                        "text": "Сброс пароля",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "sortBy": [
+          {
+            "displayName": "Тип",
+            "desc": false
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "kind",
+                "Value"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "indexByName": {
+              "kind": 0,
+              "Value": 1
+            },
+            "renameByName": {
+              "kind": "Тип",
+              "Value": "Количество"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "type": "table",
+      "title": "Использование функций",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 104,
+        "w": 12,
+        "h": 5
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "rg_users_feature{application=\"royalguardians\"}",
+          "legendFormat": "",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "align": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Пользователей"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "gauge",
+                  "mode": "gradient"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-GrYlRd"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "feature"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "decks": {
+                        "text": "Колоды",
+                        "index": 0
+                      },
+                      "hero_progress": {
+                        "text": "Прогресс героев",
+                        "index": 1
+                      },
+                      "selected_heroes": {
+                        "text": "Выбранные герои",
+                        "index": 2
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Функция"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "decks": {
+                        "text": "Колоды",
+                        "index": 0
+                      },
+                      "hero_progress": {
+                        "text": "Прогресс героев",
+                        "index": 1
+                      },
+                      "selected_heroes": {
+                        "text": "Выбранные герои",
+                        "index": 2
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "sortBy": [
+          {
+            "displayName": "Пользователей",
+            "desc": true
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "feature",
+                "Value"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "indexByName": {
+              "feature": 0,
+              "Value": 1
+            },
+            "renameByName": {
+              "feature": "Функция"
+            }
+          }
+        }
+      ]
+    },
+    {
       "id": 41,
       "type": "table",
       "title": "Участники кланов",
@@ -2859,7 +2859,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 115,
+        "y": 109,
         "w": 12,
         "h": 17
       },
@@ -3021,7 +3021,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 115,
+        "y": 109,
         "w": 12,
         "h": 17
       },
@@ -3120,7 +3120,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 132,
+        "y": 126,
         "w": 6,
         "h": 4
       },
@@ -3177,7 +3177,7 @@
       },
       "gridPos": {
         "x": 6,
-        "y": 132,
+        "y": 126,
         "w": 6,
         "h": 4
       },
@@ -3234,7 +3234,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 132,
+        "y": 126,
         "w": 6,
         "h": 4
       },
@@ -3291,7 +3291,7 @@
       },
       "gridPos": {
         "x": 18,
-        "y": 132,
+        "y": 126,
         "w": 6,
         "h": 4
       },
@@ -3331,7 +3331,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 136,
+        "y": 130,
         "w": 12,
         "h": 8
       },
@@ -3399,7 +3399,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 136,
+        "y": 130,
         "w": 12,
         "h": 8
       },
@@ -3440,7 +3440,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 144,
+        "y": 138,
         "w": 12,
         "h": 8
       },
@@ -3481,7 +3481,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 144,
+        "y": 138,
         "w": 12,
         "h": 8
       },
@@ -3522,7 +3522,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 152,
+        "y": 146,
         "w": 12,
         "h": 8
       },
@@ -3563,7 +3563,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 152,
+        "y": 146,
         "w": 12,
         "h": 8
       },
@@ -3613,7 +3613,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 160,
+        "y": 154,
         "w": 12,
         "h": 8
       },
@@ -3654,7 +3654,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 160,
+        "y": 154,
         "w": 12,
         "h": 8
       },
@@ -3695,7 +3695,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 168,
+        "y": 162,
         "w": 12,
         "h": 8
       },
@@ -3736,7 +3736,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 168,
+        "y": 162,
         "w": 12,
         "h": 8
       },
@@ -3777,7 +3777,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 176,
+        "y": 170,
         "w": 12,
         "h": 8
       },
@@ -3827,7 +3827,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 176,
+        "y": 170,
         "w": 12,
         "h": 8
       },
@@ -3868,7 +3868,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 184,
+        "y": 178,
         "w": 12,
         "h": 8
       },
@@ -3909,7 +3909,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 184,
+        "y": 178,
         "w": 12,
         "h": 8
       },
@@ -3959,7 +3959,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 192,
+        "y": 186,
         "w": 12,
         "h": 8
       },
