@@ -1818,8 +1818,8 @@
     },
     {
       "id": 35,
-      "type": "stat",
-      "title": "Активные пользователи (вход или refresh)",
+      "type": "table",
+      "title": "Пользователи по периодам",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -1828,7 +1828,7 @@
         "x": 0,
         "y": 94,
         "w": 12,
-        "h": 5
+        "h": 6
       },
       "targets": [
         {
@@ -1836,78 +1836,148 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "rg_users_active{application=\"royalguardians\"}",
-          "legendFormat": "{{period}}",
+          "expr": "label_replace(label_replace(label_replace(rg_users_active{application=\"royalguardians\"}, \"period\", \"1day\", \"period\", \"day\"), \"period\", \"2week\", \"period\", \"week\"), \"period\", \"3month\", \"period\", \"month\")",
+          "legendFormat": "",
           "refId": "A",
           "instant": true,
-          "range": false
+          "range": false,
+          "format": "table"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "label_replace(label_replace(label_replace(rg_users_registered{application=\"royalguardians\"}, \"period\", \"1day\", \"period\", \"day\"), \"period\", \"2week\", \"period\", \"week\"), \"period\", \"3month\", \"period\", \"month\")",
+          "legendFormat": "",
+          "refId": "B",
+          "instant": true,
+          "range": false,
+          "format": "table"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "short"
+          "unit": "short",
+          "custom": {
+            "align": "auto"
+          },
+          "noValue": "0"
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "day"
+              "options": "period"
             },
             "properties": [
               {
-                "id": "displayName",
-                "value": "За сутки"
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "1day": {
+                        "text": "За сутки",
+                        "index": 0
+                      },
+                      "2week": {
+                        "text": "За неделю",
+                        "index": 1
+                      },
+                      "3month": {
+                        "text": "За месяц",
+                        "index": 2
+                      }
+                    }
+                  }
+                ]
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "week"
+              "options": "Период"
             },
             "properties": [
               {
-                "id": "displayName",
-                "value": "За неделю"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "month"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "За месяц"
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "1day": {
+                        "text": "За сутки",
+                        "index": 0
+                      },
+                      "2week": {
+                        "text": "За неделю",
+                        "index": 1
+                      },
+                      "3month": {
+                        "text": "За месяц",
+                        "index": 2
+                      }
+                    }
+                  }
+                ]
               }
             ]
           }
         ]
       },
       "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "values": false
+        "showHeader": true,
+        "cellHeight": "sm",
+        "sortBy": [
+          {
+            "displayName": "Период",
+            "desc": false
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "period",
+            "mode": "outer"
+          }
         },
-        "textMode": "value_and_name",
-        "colorMode": "none",
-        "graphMode": "none",
-        "orientation": "vertical",
-        "justifyMode": "center",
-        "text": {
-          "titleSize": 13,
-          "valueSize": 28
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "period",
+                "Value #A",
+                "Value #B"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "indexByName": {
+              "period": 0,
+              "Value #A": 1,
+              "Value #B": 2
+            },
+            "renameByName": {
+              "period": "Период",
+              "Value #A": "Активные (вход или refresh)",
+              "Value #B": "Новые"
+            }
+          }
         }
-      }
+      ]
     },
     {
       "id": 36,
-      "type": "stat",
-      "title": "Новые пользователи",
+      "type": "table",
+      "title": "Кланы и альянсы",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -1916,7 +1986,7 @@
         "x": 12,
         "y": 94,
         "w": 12,
-        "h": 5
+        "h": 6
       },
       "targets": [
         {
@@ -1924,264 +1994,139 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "rg_users_registered{application=\"royalguardians\"}",
-          "legendFormat": "{{period}}",
+          "expr": "label_replace(sum(rg_clans{application=\"royalguardians\",active=\"true\"}), \"entity\", \"1clans\", \"\", \"\") or label_replace(sum(rg_alliances{application=\"royalguardians\",active=\"true\"}), \"entity\", \"2alliances\", \"\", \"\")",
+          "legendFormat": "",
           "refId": "A",
           "instant": true,
-          "range": false
+          "range": false,
+          "format": "table"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "label_replace(sum(rg_clans{application=\"royalguardians\",active=\"false\"}), \"entity\", \"1clans\", \"\", \"\") or label_replace(sum(rg_alliances{application=\"royalguardians\",active=\"false\"}), \"entity\", \"2alliances\", \"\", \"\")",
+          "legendFormat": "",
+          "refId": "B",
+          "instant": true,
+          "range": false,
+          "format": "table"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "short"
+          "unit": "short",
+          "custom": {
+            "align": "auto"
+          },
+          "noValue": "0"
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "day"
+              "options": "entity"
             },
             "properties": [
               {
-                "id": "displayName",
-                "value": "За сутки"
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "1clans": {
+                        "text": "Кланы",
+                        "index": 0
+                      },
+                      "2alliances": {
+                        "text": "Альянсы",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "week"
+              "options": "Тип"
             },
             "properties": [
               {
-                "id": "displayName",
-                "value": "За неделю"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "month"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "За месяц"
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "1clans": {
+                        "text": "Кланы",
+                        "index": 0
+                      },
+                      "2alliances": {
+                        "text": "Альянсы",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
               }
             ]
           }
         ]
       },
       "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "values": false
+        "showHeader": true,
+        "cellHeight": "sm",
+        "sortBy": [
+          {
+            "displayName": "Тип",
+            "desc": false
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "entity",
+            "mode": "outer"
+          }
         },
-        "textMode": "value_and_name",
-        "colorMode": "none",
-        "graphMode": "none",
-        "orientation": "vertical",
-        "justifyMode": "center",
-        "text": {
-          "titleSize": 13,
-          "valueSize": 28
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "entity",
+                "Value #A",
+                "Value #B"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "indexByName": {
+              "entity": 0,
+              "Value #A": 1,
+              "Value #B": 2
+            },
+            "renameByName": {
+              "entity": "Тип",
+              "Value #A": "Активные",
+              "Value #B": "Неактивные"
+            }
+          }
         }
-      }
+      ]
     },
     {
       "id": 37,
-      "type": "stat",
-      "title": "Кланы и альянсы (active)",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 99,
-        "w": 12,
-        "h": 5
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "rg_clans{application=\"royalguardians\"}",
-          "legendFormat": "кланы {{active}}",
-          "refId": "A",
-          "instant": true,
-          "range": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "rg_alliances{application=\"royalguardians\"}",
-          "legendFormat": "альянсы {{active}}",
-          "refId": "B",
-          "instant": true,
-          "range": false
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "кланы true"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Кланы активные"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "кланы false"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Кланы неактивные"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "альянсы true"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Альянсы активные"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "альянсы false"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Альянсы неактивные"
-              }
-            ]
-          }
-        ]
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "values": false
-        },
-        "textMode": "value_and_name",
-        "colorMode": "none",
-        "graphMode": "none",
-        "orientation": "vertical",
-        "justifyMode": "center",
-        "text": {
-          "titleSize": 13,
-          "valueSize": 28
-        }
-      }
-    },
-    {
-      "id": 38,
-      "type": "stat",
-      "title": "Неиспользованные токены",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 99,
-        "w": 12,
-        "h": 5
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "rg_tokens_pending{application=\"royalguardians\"}",
-          "legendFormat": "{{kind}}",
-          "refId": "A",
-          "instant": true,
-          "range": false
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "email_verification"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Подтверждение email"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "password_reset"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Сброс пароля"
-              }
-            ]
-          }
-        ]
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "values": false
-        },
-        "textMode": "value_and_name",
-        "colorMode": "none",
-        "graphMode": "none",
-        "orientation": "vertical",
-        "justifyMode": "center",
-        "text": {
-          "titleSize": 13,
-          "valueSize": 28
-        }
-      }
-    },
-    {
-      "id": 39,
-      "type": "stat",
+      "type": "table",
       "title": "Колоды",
       "datasource": {
         "type": "prometheus",
@@ -2189,9 +2134,9 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 104,
+        "y": 100,
         "w": 12,
-        "h": 5
+        "h": 6
       },
       "targets": [
         {
@@ -2199,199 +2144,164 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "rg_decks{application=\"royalguardians\"}",
-          "legendFormat": "{{type}} public={{public}}",
+          "expr": "sum by (type) (rg_decks{application=\"royalguardians\",public=\"true\"})",
+          "legendFormat": "",
           "refId": "A",
           "instant": true,
-          "range": false
+          "range": false,
+          "format": "table"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum by (type) (rg_decks{application=\"royalguardians\",public=\"false\"})",
+          "legendFormat": "",
+          "refId": "B",
+          "instant": true,
+          "range": false,
+          "format": "table"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum by (type) (rg_decks_views{application=\"royalguardians\"})",
+          "legendFormat": "",
+          "refId": "C",
+          "instant": true,
+          "range": false,
+          "format": "table"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "short"
+          "unit": "short",
+          "custom": {
+            "align": "auto"
+          },
+          "noValue": "0"
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "SIEGE public=true"
+              "options": "type"
             },
             "properties": [
               {
-                "id": "displayName",
-                "value": "Осада: публичные"
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "SIEGE": {
+                        "text": "Осада",
+                        "index": 0
+                      },
+                      "LABYRINTH": {
+                        "text": "Лабиринт",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "SIEGE public=false"
+              "options": "Тип"
             },
             "properties": [
               {
-                "id": "displayName",
-                "value": "Осада: приватные"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "LABYRINTH public=true"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Лабиринт: публичные"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "LABYRINTH public=false"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Лабиринт: приватные"
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "SIEGE": {
+                        "text": "Осада",
+                        "index": 0
+                      },
+                      "LABYRINTH": {
+                        "text": "Лабиринт",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
               }
             ]
           }
         ]
       },
       "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "values": false
+        "showHeader": true,
+        "cellHeight": "sm",
+        "sortBy": [
+          {
+            "displayName": "Тип",
+            "desc": false
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "type",
+            "mode": "outer"
+          }
         },
-        "textMode": "value_and_name",
-        "colorMode": "none",
-        "graphMode": "none",
-        "orientation": "vertical",
-        "justifyMode": "center",
-        "text": {
-          "titleSize": 13,
-          "valueSize": 28
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "type",
+                "Value #A",
+                "Value #B",
+                "Value #C"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "indexByName": {
+              "type": 0,
+              "Value #A": 1,
+              "Value #B": 2,
+              "Value #C": 3
+            },
+            "renameByName": {
+              "type": "Тип",
+              "Value #A": "Публичные",
+              "Value #B": "Приватные",
+              "Value #C": "Просмотры"
+            }
+          }
         }
-      }
+      ]
     },
     {
-      "id": 40,
-      "type": "stat",
-      "title": "Просмотры колод",
+      "id": 38,
+      "type": "table",
+      "title": "Использование функций",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
         "x": 12,
-        "y": 104,
+        "y": 100,
         "w": 12,
-        "h": 5
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "rg_decks_views{application=\"royalguardians\"}",
-          "legendFormat": "{{type}} public={{public}}",
-          "refId": "A",
-          "instant": true,
-          "range": false
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "SIEGE public=true"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Осада: публичные"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "SIEGE public=false"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Осада: приватные"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "LABYRINTH public=true"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Лабиринт: публичные"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "LABYRINTH public=false"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Лабиринт: приватные"
-              }
-            ]
-          }
-        ]
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "values": false
-        },
-        "textMode": "value_and_name",
-        "colorMode": "none",
-        "graphMode": "none",
-        "orientation": "vertical",
-        "justifyMode": "center",
-        "text": {
-          "titleSize": 13,
-          "valueSize": 28
-        }
-      }
-    },
-    {
-      "id": 41,
-      "type": "stat",
-      "title": "Кто пользуется функциями (пользователей)",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 109,
-        "w": 24,
-        "h": 5
+        "h": 6
       },
       "targets": [
         {
@@ -2400,86 +2310,157 @@
             "uid": "prometheus"
           },
           "expr": "rg_users_feature{application=\"royalguardians\"}",
-          "legendFormat": "{{feature}}",
+          "legendFormat": "",
           "refId": "A",
           "instant": true,
-          "range": false
+          "range": false,
+          "format": "table"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "short"
+          "unit": "short",
+          "custom": {
+            "align": "auto"
+          }
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "decks"
+              "options": "Value"
             },
             "properties": [
               {
                 "id": "displayName",
-                "value": "Колоды"
+                "value": "Пользователей"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "gauge",
+                  "mode": "gradient"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-GrYlRd"
+                }
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "hero_progress"
+              "options": "feature"
             },
             "properties": [
               {
-                "id": "displayName",
-                "value": "Прогресс героев"
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "decks": {
+                        "text": "Колоды",
+                        "index": 0
+                      },
+                      "hero_progress": {
+                        "text": "Прогресс героев",
+                        "index": 1
+                      },
+                      "selected_heroes": {
+                        "text": "Выбранные герои",
+                        "index": 2
+                      }
+                    }
+                  }
+                ]
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "selected_heroes"
+              "options": "Функция"
             },
             "properties": [
               {
-                "id": "displayName",
-                "value": "Выбранные герои"
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "decks": {
+                        "text": "Колоды",
+                        "index": 0
+                      },
+                      "hero_progress": {
+                        "text": "Прогресс героев",
+                        "index": 1
+                      },
+                      "selected_heroes": {
+                        "text": "Выбранные герои",
+                        "index": 2
+                      }
+                    }
+                  }
+                ]
               }
             ]
           }
         ]
       },
       "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "values": false
+        "showHeader": true,
+        "cellHeight": "sm",
+        "sortBy": [
+          {
+            "displayName": "Пользователей",
+            "desc": true
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "feature",
+                "Value"
+              ]
+            }
+          }
         },
-        "textMode": "value_and_name",
-        "colorMode": "none",
-        "graphMode": "none",
-        "orientation": "vertical",
-        "justifyMode": "center",
-        "text": {
-          "titleSize": 13,
-          "valueSize": 28
+        {
+          "id": "organize",
+          "options": {
+            "indexByName": {
+              "feature": 0,
+              "Value": 1
+            },
+            "renameByName": {
+              "feature": "Функция"
+            }
+          }
         }
-      }
+      ]
     },
     {
-      "id": 42,
+      "id": 39,
       "type": "table",
-      "title": "Участники кланов",
+      "title": "Неиспользованные токены",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
         "x": 0,
-        "y": 114,
+        "y": 106,
         "w": 12,
-        "h": 17
+        "h": 6
       },
       "targets": [
         {
@@ -2487,7 +2468,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "topk(20, rg_clan_members{application=\"royalguardians\"})",
+          "expr": "rg_tokens_pending{application=\"royalguardians\"}",
           "legendFormat": "",
           "refId": "A",
           "instant": true,
@@ -2500,133 +2481,59 @@
           "unit": "short",
           "custom": {
             "align": "auto"
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Value"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Значение"
-              },
-              {
-                "id": "custom.cellOptions",
-                "value": {
-                  "type": "gauge",
-                  "mode": "gradient"
-                }
-              },
-              {
-                "id": "color",
-                "value": {
-                  "mode": "continuous-GrYlRd"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "sortBy": [
-          {
-            "displayName": "Значение",
-            "desc": true
-          }
-        ]
-      },
-      "transformations": [
-        {
-          "id": "filterFieldsByName",
-          "options": {
-            "include": {
-              "names": [
-                "clan",
-                "alliance",
-                "Value"
-              ]
-            }
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "indexByName": {
-              "clan": 0,
-              "alliance": 1,
-              "Value": 2
-            },
-            "renameByName": {
-              "clan": "Клан",
-              "alliance": "Альянс"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "id": 43,
-      "type": "table",
-      "title": "Пользователи по серверам",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 114,
-        "w": 12,
-        "h": 17
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
           },
-          "expr": "topk(15, rg_users_server{application=\"royalguardians\"})",
-          "legendFormat": "",
-          "refId": "A",
-          "instant": true,
-          "range": false,
-          "format": "table"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "custom": {
-            "align": "auto"
-          }
+          "noValue": "0"
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "Value"
+              "options": "kind"
             },
             "properties": [
               {
-                "id": "displayName",
-                "value": "Значение"
-              },
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "email_verification": {
+                        "text": "Подтверждение email",
+                        "index": 0
+                      },
+                      "password_reset": {
+                        "text": "Сброс пароля",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Тип"
+            },
+            "properties": [
               {
-                "id": "custom.cellOptions",
-                "value": {
-                  "type": "gauge",
-                  "mode": "gradient"
-                }
-              },
-              {
-                "id": "color",
-                "value": {
-                  "mode": "continuous-GrYlRd"
-                }
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "email_verification": {
+                        "text": "Подтверждение email",
+                        "index": 0
+                      },
+                      "password_reset": {
+                        "text": "Сброс пароля",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
               }
             ]
           }
@@ -2637,8 +2544,8 @@
         "cellHeight": "sm",
         "sortBy": [
           {
-            "displayName": "Значение",
-            "desc": true
+            "displayName": "Тип",
+            "desc": false
           }
         ]
       },
@@ -2648,7 +2555,7 @@
           "options": {
             "include": {
               "names": [
-                "server",
+                "kind",
                 "Value"
               ]
             }
@@ -2658,18 +2565,19 @@
           "id": "organize",
           "options": {
             "indexByName": {
-              "server": 0,
+              "kind": 0,
               "Value": 1
             },
             "renameByName": {
-              "server": "Сервер"
+              "kind": "Тип",
+              "Value": "Количество"
             }
           }
         }
       ]
     },
     {
-      "id": 44,
+      "id": 40,
       "type": "table",
       "title": "Контент",
       "datasource": {
@@ -2677,8 +2585,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 0,
-        "y": 131,
+        "x": 12,
+        "y": 106,
         "w": 12,
         "h": 9
       },
@@ -2778,6 +2686,56 @@
                 ]
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Тип"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "heroes": {
+                        "text": "Герои",
+                        "index": 0
+                      },
+                      "items": {
+                        "text": "Предметы",
+                        "index": 1
+                      },
+                      "bosses": {
+                        "text": "Боссы",
+                        "index": 2
+                      },
+                      "runes": {
+                        "text": "Руны",
+                        "index": 3
+                      },
+                      "recipes": {
+                        "text": "Рецепты",
+                        "index": 4
+                      },
+                      "articles": {
+                        "text": "Статьи",
+                        "index": 5
+                      },
+                      "chronicles": {
+                        "text": "Хроники",
+                        "index": 6
+                      },
+                      "calendar_events": {
+                        "text": "События календаря",
+                        "index": 7
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -2818,7 +2776,208 @@
       ]
     },
     {
-      "id": 45,
+      "id": 41,
+      "type": "table",
+      "title": "Участники кланов",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 115,
+        "w": 12,
+        "h": 17
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "topk(20, rg_clan_members{application=\"royalguardians\"})",
+          "legendFormat": "",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "align": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Значение"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "gauge",
+                  "mode": "gradient"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-GrYlRd"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "sortBy": [
+          {
+            "displayName": "Значение",
+            "desc": true
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "clan",
+                "alliance",
+                "Value"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "indexByName": {
+              "clan": 0,
+              "alliance": 1,
+              "Value": 2
+            },
+            "renameByName": {
+              "clan": "Клан",
+              "alliance": "Альянс"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "type": "table",
+      "title": "Пользователи по серверам",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 115,
+        "w": 12,
+        "h": 17
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "topk(15, rg_users_server{application=\"royalguardians\"})",
+          "legendFormat": "",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "align": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Значение"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "gauge",
+                  "mode": "gradient"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-GrYlRd"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "sortBy": [
+          {
+            "displayName": "Значение",
+            "desc": true
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "server",
+                "Value"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "indexByName": {
+              "server": 0,
+              "Value": 1
+            },
+            "renameByName": {
+              "server": "Сервер"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 43,
       "type": "stat",
       "title": "LCP p75",
       "datasource": {
@@ -2826,8 +2985,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 12,
-        "y": 131,
+        "x": 0,
+        "y": 132,
         "w": 6,
         "h": 4
       },
@@ -2875,7 +3034,7 @@
       }
     },
     {
-      "id": 46,
+      "id": 44,
       "type": "stat",
       "title": "INP p75",
       "datasource": {
@@ -2883,8 +3042,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 18,
-        "y": 131,
+        "x": 6,
+        "y": 132,
         "w": 6,
         "h": 4
       },
@@ -2932,7 +3091,7 @@
       }
     },
     {
-      "id": 47,
+      "id": 45,
       "type": "stat",
       "title": "CLS p75 (тысячные доли)",
       "datasource": {
@@ -2940,8 +3099,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 0,
-        "y": 140,
+        "x": 12,
+        "y": 132,
         "w": 6,
         "h": 4
       },
@@ -2989,7 +3148,7 @@
       }
     },
     {
-      "id": 48,
+      "id": 46,
       "type": "stat",
       "title": "TTFB p75",
       "datasource": {
@@ -2997,8 +3156,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 6,
-        "y": 140,
+        "x": 18,
+        "y": 132,
         "w": 6,
         "h": 4
       },
@@ -3029,7 +3188,7 @@
       }
     },
     {
-      "id": 49,
+      "id": 47,
       "type": "timeseries",
       "title": "Core Web Vitals p75 по времени",
       "datasource": {
@@ -3037,8 +3196,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 12,
-        "y": 140,
+        "x": 0,
+        "y": 136,
         "w": 12,
         "h": 8
       },
@@ -3097,7 +3256,7 @@
       }
     },
     {
-      "id": 50,
+      "id": 48,
       "type": "timeseries",
       "title": "Доля хорошего LCP по разделам",
       "datasource": {
@@ -3105,8 +3264,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 0,
-        "y": 148,
+        "x": 12,
+        "y": 136,
         "w": 12,
         "h": 8
       },
@@ -3138,7 +3297,7 @@
       }
     },
     {
-      "id": 51,
+      "id": 49,
       "type": "timeseries",
       "title": "LCP p75: телефон и компьютер",
       "datasource": {
@@ -3146,8 +3305,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 12,
-        "y": 148,
+        "x": 0,
+        "y": 144,
         "w": 12,
         "h": 8
       },
@@ -3179,7 +3338,7 @@
       }
     },
     {
-      "id": 52,
+      "id": 50,
       "type": "timeseries",
       "title": "Оценки Web Vitals (за час)",
       "datasource": {
@@ -3187,8 +3346,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 0,
-        "y": 156,
+        "x": 12,
+        "y": 144,
         "w": 12,
         "h": 8
       },
@@ -3220,7 +3379,7 @@
       }
     },
     {
-      "id": 53,
+      "id": 51,
       "type": "timeseries",
       "title": "Ошибки JavaScript (за час)",
       "datasource": {
@@ -3228,8 +3387,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 12,
-        "y": 156,
+        "x": 0,
+        "y": 152,
         "w": 12,
         "h": 8
       },
@@ -3261,7 +3420,7 @@
       }
     },
     {
-      "id": 54,
+      "id": 52,
       "type": "timeseries",
       "title": "SSR: время рендера страницы",
       "datasource": {
@@ -3269,8 +3428,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 0,
-        "y": 164,
+        "x": 12,
+        "y": 152,
         "w": 12,
         "h": 8
       },
@@ -3311,7 +3470,7 @@
       }
     },
     {
-      "id": 55,
+      "id": 53,
       "type": "timeseries",
       "title": "SSR: рендеров в минуту",
       "datasource": {
@@ -3319,8 +3478,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 12,
-        "y": 164,
+        "x": 0,
+        "y": 160,
         "w": 12,
         "h": 8
       },
@@ -3352,7 +3511,7 @@
       }
     },
     {
-      "id": 56,
+      "id": 54,
       "type": "timeseries",
       "title": "SSR: запросы к backend (p95)",
       "datasource": {
@@ -3360,8 +3519,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 0,
-        "y": 172,
+        "x": 12,
+        "y": 160,
         "w": 12,
         "h": 8
       },
@@ -3393,7 +3552,7 @@
       }
     },
     {
-      "id": 57,
+      "id": 55,
       "type": "timeseries",
       "title": "SSR: HTTP по типу и статусу (в минуту)",
       "datasource": {
@@ -3401,8 +3560,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 12,
-        "y": 172,
+        "x": 0,
+        "y": 168,
         "w": 12,
         "h": 8
       },
@@ -3434,7 +3593,7 @@
       }
     },
     {
-      "id": 58,
+      "id": 56,
       "type": "timeseries",
       "title": "Посетители страниц: люди и поисковые боты (в час)",
       "datasource": {
@@ -3442,8 +3601,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 0,
-        "y": 180,
+        "x": 12,
+        "y": 168,
         "w": 12,
         "h": 8
       },
@@ -3475,7 +3634,7 @@
       }
     },
     {
-      "id": 59,
+      "id": 57,
       "type": "timeseries",
       "title": "SSR: память Node.js",
       "datasource": {
@@ -3483,8 +3642,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 12,
-        "y": 180,
+        "x": 0,
+        "y": 176,
         "w": 12,
         "h": 8
       },
@@ -3525,7 +3684,7 @@
       }
     },
     {
-      "id": 60,
+      "id": 58,
       "type": "timeseries",
       "title": "SSR: задержка event loop (p99)",
       "datasource": {
@@ -3533,8 +3692,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 0,
-        "y": 188,
+        "x": 12,
+        "y": 176,
         "w": 12,
         "h": 8
       },
@@ -3566,7 +3725,7 @@
       }
     },
     {
-      "id": 61,
+      "id": 59,
       "type": "timeseries",
       "title": "SSR: CPU",
       "datasource": {
@@ -3574,8 +3733,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 12,
-        "y": 188,
+        "x": 0,
+        "y": 184,
         "w": 12,
         "h": 8
       },
@@ -3607,7 +3766,7 @@
       }
     },
     {
-      "id": 62,
+      "id": 60,
       "type": "timeseries",
       "title": "Куча JVM",
       "datasource": {
@@ -3615,8 +3774,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 0,
-        "y": 196,
+        "x": 12,
+        "y": 184,
         "w": 12,
         "h": 8
       },
@@ -3657,7 +3816,7 @@
       }
     },
     {
-      "id": 63,
+      "id": 61,
       "type": "timeseries",
       "title": "Подключения к БД",
       "datasource": {
@@ -3665,8 +3824,8 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 12,
-        "y": 196,
+        "x": 0,
+        "y": 192,
         "w": 12,
         "h": 8
       },
